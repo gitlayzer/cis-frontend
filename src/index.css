@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+.workflow-modal .ant-modal-content {
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.workflow-modal .ant-modal-header {
+  padding: 24px 24px 0;
+  border-bottom: none;
+}
+
+.ant-card {
+  border-radius: 12px;
+}
+
+.ant-input, .ant-input-password {
+  border-radius: 6px;
+}
+
+.ant-btn {
+  border-radius: 6px;
+}
+
+/* 添加过渡效果 */
+.ant-card,
+.ant-input,
+.ant-input-password,
+.ant-btn {
+  transition: all 0.3s ease;
+}
+
+/* 输入框悬停效果 */
+.ant-input:hover,
+.ant-input-password:hover {
+  border-color: #4096ff;
+}
+
+/* 按钮悬停效果 */
+.ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover {
+  border-color: #4096ff;
+  color: #4096ff;
+}
+
+.tab-icon {
+  margin-right: 2px;
+}
+
+/* 暗色模式样式 */
+.dark {
+  background-color: #141414;
+  color-scheme: dark;
+}
+
+.dark .bg-gray-50 {
+  background-color: #141414;
+}
+
+.dark .ant-card {
+  background-color: #1f1f1f;
+}
+
+/* 修改主题切换按钮的样式 */
+.dark .ant-btn {
+  background-color: #1f1f1f;
+  border-color: #434343;
+  color: #d9d9d9;
+}
+
+.dark .ant-btn:hover {
+  background-color: #2d2d2d !important;
+  border-color: #434343 !important;
+  color: #fff !important;
+}
+
+.dark .ant-descriptions-item-label {
+  @apply text-gray-400;
+}
+
+.dark .ant-timeline-item-content {
+  @apply text-gray-300;
+}
+
+.dark .text-gray-500 {
+  @apply text-gray-400;
+}
+
+/* 暗色模式下的悬停效果 */
+.dark .hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+}
+
+/* 主题切换按钮的阴影效果 */
+.dark .shadow-lg {
+  box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+} 
