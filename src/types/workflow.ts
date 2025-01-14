@@ -21,12 +21,14 @@ export interface Schedule {
   enabled: boolean;
 }
 
+export type WorkflowStatus = 'pending' | 'running' | 'completed' | 'failed';
+
 export interface Workflow {
   name: string;
   source: Registry;
   targets: Registry[];
   images: string[];
-  status: 'pending' | 'running' | 'completed' | 'failed';
+  status: WorkflowStatus;
   createTime: string;
   updateTime: string;
   lastRun: string | null;

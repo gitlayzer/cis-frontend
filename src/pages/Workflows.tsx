@@ -1,24 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Modal, message, Card, Typography, Tabs, Layout, Table, Space } from 'antd';
-import { PlusOutlined, SyncOutlined, DashboardOutlined, UnorderedListOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Modal, message, Card, Typography, Tabs, Layout } from 'antd';
+import { 
+  PlusOutlined, 
+  SyncOutlined, 
+  DashboardOutlined, 
+  UnorderedListOutlined 
+} from '@ant-design/icons';
 import WorkflowList from '../components/WorkflowList';
 import WorkflowForm from '../components/WorkflowForm';
 import WorkflowStats from '../components/WorkflowStats';
 import { workflowApi } from '../api/workflow';
 import { Workflow } from '../types/workflow';
 import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 
 const { Title } = Typography;
 
 const Workflows: React.FC = () => {
-  const navigate = useNavigate();
   const { isDark } = useTheme();
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
   const errorShown = useRef(false);
 
   const fetchWorkflows = async () => {
@@ -28,7 +30,8 @@ const Workflows: React.FC = () => {
       setLoading(true);
       errorShown.current = false;
       const response = await workflowApi.getWorkflows();
-      setWorkflows(response.data || []);
+      const workflowData = response.data as unknown as Workflow[];
+      setWorkflows(workflowData);
     } catch (error) {
       if (!errorShown.current) {
         message.error('获取工作流列表失败');
@@ -45,53 +48,20 @@ const Workflows: React.FC = () => {
   }, []);
 
   const handleRefresh = async () => {
-    setRefreshing(true);
     await fetchWorkflows();
-    setRefreshing(false);
   };
 
   const handleCreateWorkflow = async (values: any) => {
     try {
-      const response = await workflowApi.createWorkflow(values);
-      if (response.code === 200) {
-        message.success('创建工作流成功');
-        setIsModalVisible(false);
-        fetchWorkflows();
-      } else {
-        message.error(response.message || '创建失败');
-      }
+      await workflowApi.createWorkflow(values);
+      message.success('创建工作流成功');
+      setIsModalVisible(false);
+      fetchWorkflows();
     } catch (error) {
       console.error('Error creating workflow:', error);
       message.error('创建失败');
     }
   };
-
-  const columns = [
-    {
-      title: '操作',
-      key: 'action',
-      render: (_, record: Workflow) => (
-        <Space size="middle">
-          <Button
-            type="link"
-            icon={<EyeOutlined />}
-            onClick={() => navigate(`/workflow/${record.name}`)}
-            className={isDark ? '!text-gray-300 hover:!text-white' : ''}
-          >
-            查看详情
-          </Button>
-          <Button
-            type="link"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record.name)}
-          >
-            删除
-          </Button>
-        </Space>
-      ),
-    },
-  ];
 
   const tabItems = [
     {

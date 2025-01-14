@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Button, Space, Tag, Popconfirm, message } from 'antd';
-import { Workflow } from '../types/workflow';
+import { Workflow, WorkflowStatus } from '../types/workflow';
 import { workflowApi } from '../api/workflow';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,8 +9,6 @@ interface WorkflowListProps {
   onRefresh: () => void;
   loading?: boolean;
 }
-
-type WorkflowStatus = Workflow['status'];
 
 const WorkflowList: React.FC<WorkflowListProps> = ({ workflows, onRefresh, loading }) => {
   const navigate = useNavigate();
@@ -58,8 +56,8 @@ const WorkflowList: React.FC<WorkflowListProps> = ({ workflows, onRefresh, loadi
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => {
-        const colors = {
+      render: (status: WorkflowStatus) => {
+        const colors: Record<WorkflowStatus, string> = {
           pending: 'gold',
           running: 'blue',
           completed: 'green',

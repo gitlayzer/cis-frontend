@@ -19,7 +19,9 @@ const WorkflowDetailPage: React.FC = () => {
     try {
       setLoading(true);
       const response = await workflowApi.getWorkflow(name);
-      setWorkflow(response.data);
+      if (response.data) {
+        setWorkflow(response.data as unknown as Workflow);
+      }
     } catch (error) {
       message.error('获取工作流详情失败');
       console.error('Error fetching workflow:', error);

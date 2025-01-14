@@ -3,7 +3,7 @@ import { Form, Input, Button, message, Space, Typography } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { userApi } from '../api/user';
-import { User } from '../types/user';
+import { User, ApiLoginResponse } from '../types/user';
 import AuthLayout from '../components/AuthLayout';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -15,10 +15,11 @@ const Login: React.FC = () => {
   const handleLogin = async (values: User) => {
     try {
       const response = await userApi.login(values);
-      localStorage.setItem('token', response.data.token);
+      const loginResponse = response as unknown as ApiLoginResponse;
+      localStorage.setItem('token', loginResponse.data.token);
       localStorage.setItem('username', values.username);
-      if (response.data.email) {
-        localStorage.setItem('email', response.data.email);
+      if (loginResponse.data.email) {
+        localStorage.setItem('email', loginResponse.data.email);
       }
       message.success('登录成功');
       navigate('/');

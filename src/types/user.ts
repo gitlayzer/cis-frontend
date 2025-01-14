@@ -1,3 +1,5 @@
+import { ApiResponse } from './workflow';
+
 export interface User {
   username: string;
   password: string;
@@ -6,4 +8,10 @@ export interface User {
 
 export interface LoginResponse {
   token: string;
+  username: string;
+  email?: string;
+}
+
+export interface ApiLoginResponse extends ApiResponse<LoginResponse> {
+  data: LoginResponse;
 } 

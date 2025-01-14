@@ -7,7 +7,7 @@ import {
   ClockCircleOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { Workflow } from '../types/workflow';
+import { Workflow, WorkflowStatus } from '../types/workflow';
 
 interface WorkflowStatsProps {
   workflows: Workflow[];
@@ -39,8 +39,8 @@ const WorkflowStats: React.FC<WorkflowStatsProps> = ({ workflows }) => {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-      render: (status: string) => {
-        const colors = {
+      render: (status: WorkflowStatus) => {
+        const colors: Record<WorkflowStatus, string> = {
           pending: 'gold',
           running: 'blue',
           completed: 'green',

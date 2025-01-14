@@ -7,7 +7,7 @@ import {
   CloudDownloadOutlined,
   HistoryOutlined
 } from '@ant-design/icons';
-import { Workflow } from '../types/workflow';
+import { Workflow, WorkflowStatus } from '../types/workflow';
 import { workflowApi } from '../api/workflow';
 import WorkflowForm from './WorkflowForm';
 import { maskUsername } from '../utils/format';
@@ -52,8 +52,8 @@ const WorkflowDetail: React.FC<WorkflowDetailProps> = ({ workflow, onRefresh }) 
     }
   };
 
-  const getStatusTag = (status: string) => {
-    const colors = {
+  const getStatusTag = (status: WorkflowStatus) => {
+    const colors: Record<WorkflowStatus, string> = {
       pending: 'gold',
       running: 'blue',
       completed: 'green',

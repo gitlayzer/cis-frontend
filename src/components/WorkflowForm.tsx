@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, Space, message, Switch, Card, Typography } from 'antd';
+import { Form, Input, Button, message, Switch, Card, Typography } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { Workflow } from '../types/workflow';
 import { useTheme } from '../contexts/ThemeContext';
@@ -119,7 +119,7 @@ const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, is
         <Form.List name="targets">
           {(fields, { add, remove }) => (
             <>
-              {fields.map((field, index) => (
+              {fields.map((field) => (
                 <div key={field.key} className="border-b pb-4 mb-4">
                   <div className="flex items-start">
                     <Form.Item
@@ -187,7 +187,7 @@ const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, is
         {(fields, { add, remove }) => (
           <div className="bg-gray-50 p-4 rounded-lg mb-4">
             <h3 className="mb-4">镜像列表</h3>
-            {fields.map((field, index) => (
+            {fields.map((field) => (
               <div key={field.key} className="flex items-center gap-2 mb-2">
                 <Form.Item
                   {...field}
