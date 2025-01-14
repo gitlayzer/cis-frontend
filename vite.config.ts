@@ -10,6 +10,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  assetsInclude: ['**/*.png'],
   server: {
     port: 3000,
     proxy: {

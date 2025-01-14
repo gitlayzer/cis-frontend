@@ -36,7 +36,7 @@ const WorkflowDetailPage: React.FC = () => {
     <div className="min-h-screen bg-gray-50 p-6">
       <Card className="shadow-md">
         <div className="flex items-center mb-6">
-          <Button 
+          <Button
             icon={<ArrowLeftOutlined />} 
             onClick={() => navigate(-1)}
             className="mr-4"

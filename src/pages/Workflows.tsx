@@ -1,15 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Modal, message, Card, Typography, Tabs } from 'antd';
-import { PlusOutlined, SyncOutlined, DashboardOutlined, UnorderedListOutlined } from '@ant-design/icons';
+import { Button, Modal, message, Card, Typography, Tabs, Layout, Table, Space } from 'antd';
+import { PlusOutlined, SyncOutlined, DashboardOutlined, UnorderedListOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 import WorkflowList from '../components/WorkflowList';
 import WorkflowForm from '../components/WorkflowForm';
 import WorkflowStats from '../components/WorkflowStats';
 import { workflowApi } from '../api/workflow';
 import { Workflow } from '../types/workflow';
+import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 
 const { Title } = Typography;
 
 const Workflows: React.FC = () => {
+  const navigate = useNavigate();
+  const { isDark } = useTheme();
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,6 +66,33 @@ const Workflows: React.FC = () => {
     }
   };
 
+  const columns = [
+    {
+      title: '操作',
+      key: 'action',
+      render: (_, record: Workflow) => (
+        <Space size="middle">
+          <Button
+            type="link"
+            icon={<EyeOutlined />}
+            onClick={() => navigate(`/workflow/${record.name}`)}
+            className={isDark ? '!text-gray-300 hover:!text-white' : ''}
+          >
+            查看详情
+          </Button>
+          <Button
+            type="link"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record.name)}
+          >
+            删除
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
   const tabItems = [
     {
       key: 'stats',
@@ -91,35 +123,38 @@ const Workflows: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <Card className="shadow-md">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <Title level={2} className="!mb-1">工作流管理</Title>
-            <Typography.Text type="secondary">
-              管理和监控您的镜像同步工作流
-            </Typography.Text>
+    <Layout className="min-h-screen">
+      <Header />
+      <Layout.Content className="bg-gray-50 p-6">
+        <Card className={isDark ? 'bg-[#1f1f1f] border-[#303030]' : ''}>
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <Title level={2} className="!mb-1">工作流管理</Title>
+              <Typography.Text type="secondary">
+                管理和监控您的镜像同步工作流
+              </Typography.Text>
+            </div>
+            <div className="space-x-4">
+              <Button
+                icon={<SyncOutlined />}
+                onClick={handleRefresh}
+                className={isDark ? 'text-gray-300 hover:text-white border-[#434343]' : ''}
+              >
+                刷新
+              </Button>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => setIsModalVisible(true)}
+              >
+                创建工作流
+              </Button>
+            </div>
           </div>
-          <div className="space-x-4">
-            <Button
-              icon={<SyncOutlined spin={refreshing} />}
-              onClick={handleRefresh}
-              disabled={loading}
-            >
-              刷新
-            </Button>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              onClick={() => setIsModalVisible(true)}
-            >
-              创建工作流
-            </Button>
-          </div>
-        </div>
 
-        <Tabs defaultActiveKey="stats" items={tabItems} />
-      </Card>
+          <Tabs defaultActiveKey="stats" items={tabItems} />
+        </Card>
+      </Layout.Content>
 
       <Modal
         title={
@@ -135,11 +170,11 @@ const Workflows: React.FC = () => {
         footer={null}
         width={800}
         centered
-        className="workflow-modal"
+        className={isDark ? 'dark-modal' : 'workflow-modal'}
       >
         <WorkflowForm onSubmit={handleCreateWorkflow} />
       </Modal>
-    </div>
+    </Layout>
   );
 };
 

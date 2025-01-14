@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, Button, Space, message, Switch, Card, Typography } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import { Workflow } from '../types/workflow';
+import { useTheme } from '../contexts/ThemeContext';
 
 const { Text } = Typography;
 
@@ -13,6 +14,7 @@ interface WorkflowFormProps {
 
 const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, isEdit = false }) => {
   const [form] = Form.useForm();
+  const { isDark } = useTheme();
 
   useEffect(() => {
     if (initialValues) {
@@ -20,8 +22,21 @@ const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, is
     }
   }, [initialValues, form]);
 
+  const generateHash = (): string => {
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+
   const handleSubmit = async (values: any) => {
     try {
+      if (!isEdit) {
+        const hash = generateHash();
+        values.name = `${values.name}-${hash}`;
+      }
       await onSubmit(values);
     } catch (error) {
       message.error('操作失败');
@@ -44,37 +59,86 @@ const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, is
         <Input disabled={isEdit} />
       </Form.Item>
 
-      <div className="bg-gray-50 p-4 rounded-lg mb-4">
+      <div className={`p-4 rounded-lg mb-4 ${isDark ? 'bg-[#141414]' : 'bg-gray-50'}`}>
         <h3 className="mb-4">源镜像仓库</h3>
         <Form.Item label="仓库地址" name={['source', 'url']} rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item label="用户名" name={['source', 'auth', 'username']} rules={[{ required: true }]}>
-          <Input />
+
+        <Form.Item 
+          label="启用认证" 
+          name={['source', 'authEnabled']} 
+          valuePropName="checked"
+          initialValue={false}
+        >
+          <Switch />
         </Form.Item>
-        <Form.Item label="密码" name={['source', 'auth', 'password']} rules={[{ required: true }]}>
-          <Input.Password />
+
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, currentValues) => {
+            return prevValues?.source?.authEnabled !== currentValues?.source?.authEnabled;
+          }}
+        >
+          {({ getFieldValue }) => {
+            const authEnabled = getFieldValue(['source', 'authEnabled']);
+            return authEnabled ? (
+              <>
+                <Form.Item 
+                  label="用户名" 
+                  name={['source', 'auth', 'username']} 
+                  rules={[{ required: true, message: '请输入用户名' }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item 
+                  label="密码" 
+                  name={['source', 'auth', 'password']} 
+                  rules={[{ required: true, message: '请输入密码' }]}
+                >
+                  <Input.Password />
+                </Form.Item>
+              </>
+            ) : null;
+          }}
+        </Form.Item>
+
+        <Form.Item 
+          label="允许自签名证书" 
+          name={['source', 'insecure']} 
+          valuePropName="checked"
+          initialValue={false}
+          tooltip="如果仓库使用自签名证书，请开启此选项"
+        >
+          <Switch />
         </Form.Item>
       </div>
 
-      <div className="bg-gray-50 p-4 rounded-lg mb-4">
+      <div className={`p-4 rounded-lg mb-4 ${isDark ? 'bg-[#141414]' : 'bg-gray-50'}`}>
         <h3 className="mb-4">目标镜像仓库</h3>
         <Form.List name="targets">
           {(fields, { add, remove }) => (
             <>
               {fields.map((field, index) => (
                 <div key={field.key} className="border-b pb-4 mb-4">
-                  <Space align="baseline">
+                  <div className="flex items-start">
                     <Form.Item
                       {...field}
                       label="仓库地址"
                       name={[field.name, 'url']}
                       rules={[{ required: true }]}
+                      className="flex-1 mb-4"
                     >
                       <Input />
                     </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
+                    <Button 
+                      type="text" 
+                      danger
+                      icon={<MinusCircleOutlined />}
+                      onClick={() => remove(field.name)}
+                      className="mt-8 ml-2"
+                    />
+                  </div>
                   <Form.Item
                     {...field}
                     label="用户名"
@@ -97,7 +161,17 @@ const WorkflowForm: React.FC<WorkflowFormProps> = ({ initialValues, onSubmit, is
                     name={[field.name, 'namespace']}
                     rules={[{ required: true }]}
                   >
-                    <Input placeholder="例如: githubops" />
+                    <Input placeholder="例如: library" />
+                  </Form.Item>
+                  <Form.Item 
+                    {...field}
+                    label="允许自签名证书" 
+                    name={[field.name, 'insecure']} 
+                    valuePropName="checked"
+                    initialValue={false}
+                    tooltip="如果仓库使用自签名证书，请开启此选项"
+                  >
+                    <Switch />
                   </Form.Item>
                 </div>
               ))}

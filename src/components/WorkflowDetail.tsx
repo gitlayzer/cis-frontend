@@ -95,9 +95,6 @@ const WorkflowDetail: React.FC<WorkflowDetailProps> = ({ workflow, onRefresh }) 
           <Descriptions.Item label="状态">{getStatusTag(workflow.status)}</Descriptions.Item>
           <Descriptions.Item label="创建时间">{new Date(workflow.createTime).toLocaleString()}</Descriptions.Item>
           <Descriptions.Item label="更新时间">{new Date(workflow.updateTime).toLocaleString()}</Descriptions.Item>
-          <Descriptions.Item label="最后执行时间">
-            {workflow.lastRun ? new Date(workflow.lastRun).toLocaleString() : '-'}
-          </Descriptions.Item>
         </Descriptions>
       </Card>
 
@@ -111,9 +108,11 @@ const WorkflowDetail: React.FC<WorkflowDetailProps> = ({ workflow, onRefresh }) 
       >
         <Descriptions column={2}>
           <Descriptions.Item label="仓库地址">{workflow.source.url}</Descriptions.Item>
-          <Descriptions.Item label="用户名">
-            {maskUsername(workflow.source.auth.username)}
-          </Descriptions.Item>
+          {workflow.source.auth && (
+            <Descriptions.Item label="用户名">
+              {maskUsername(workflow.source.auth.username)}
+            </Descriptions.Item>
+          )}
         </Descriptions>
       </Card>
 
@@ -130,9 +129,11 @@ const WorkflowDetail: React.FC<WorkflowDetailProps> = ({ workflow, onRefresh }) 
             {index > 0 && <Divider />}
             <Descriptions column={2} title={`目标仓库 #${index + 1}`}>
               <Descriptions.Item label="仓库地址">{target.url}</Descriptions.Item>
-              <Descriptions.Item label="用户名">
-                {maskUsername(target.auth.username)}
-              </Descriptions.Item>
+              {target.auth && (
+                <Descriptions.Item label="用户名">
+                  {maskUsername(target.auth.username)}
+                </Descriptions.Item>
+              )}
               <Descriptions.Item label="命名空间">{target.namespace}</Descriptions.Item>
             </Descriptions>
           </div>

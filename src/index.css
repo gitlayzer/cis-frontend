@@ -21,28 +21,107 @@
   border-radius: 6px;
 }
 
+/* 按钮基础样式 */
 .ant-btn {
   border-radius: 6px;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  font-weight: 500;
 }
 
-/* 添加过渡效果 */
-.ant-card,
-.ant-input,
-.ant-input-password,
-.ant-btn {
-  transition: all 0.3s ease;
+/* 亮色模式下的按钮样式 */
+/* 主要按钮 */
+.ant-btn-primary {
+  background: #2c2c2c !important;
+  border-color: #2c2c2c !important;
+  color: white !important;
 }
 
-/* 输入框悬停效果 */
-.ant-input:hover,
-.ant-input-password:hover {
-  border-color: #4096ff;
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: #404040 !important;
+  border-color: #404040 !important;
 }
 
-/* 按钮悬停效果 */
-.ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover {
-  border-color: #4096ff;
-  color: #4096ff;
+/* 默认按钮 */
+.ant-btn-default {
+  background: transparent;
+  border-color: #d9d9d9;
+  color: #2c2c2c;
+}
+
+.ant-btn-default:hover,
+.ant-btn-default:focus {
+  border-color: #2c2c2c !important;
+  color: #2c2c2c !important;
+}
+
+/* 链接按钮 */
+.ant-btn-link {
+  color: #2c2c2c !important;
+  border: none !important;
+  background: transparent !important;
+  padding: 4px 8px;
+}
+
+.ant-btn-link:hover,
+.ant-btn-link:focus {
+  color: #404040 !important;
+  background: transparent !important;
+}
+
+/* 文本按钮 */
+.ant-btn-text {
+  color: #2c2c2c !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.ant-btn-text:hover,
+.ant-btn-text:focus {
+  color: #404040 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 危险按钮 */
+.ant-btn-dangerous {
+  color: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+}
+
+.ant-btn-dangerous:hover,
+.ant-btn-dangerous:focus {
+  color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+.ant-btn-dangerous.ant-btn-primary {
+  background: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+  color: white !important;
+}
+
+.ant-btn-dangerous.ant-btn-primary:hover,
+.ant-btn-dangerous.ant-btn-primary:focus {
+  background: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+/* 禁用状态 */
+.ant-btn[disabled],
+.ant-btn[disabled]:hover,
+.ant-btn[disabled]:focus {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: #d9d9d9 !important;
+  color: rgba(0, 0, 0, 0.25) !important;
+  cursor: not-allowed;
+}
+
+.dark .ant-btn[disabled],
+.dark .ant-btn[disabled]:hover,
+.dark .ant-btn[disabled]:focus {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: #434343 !important;
+  color: rgba(255, 255, 255, 0.3) !important;
 }
 
 .tab-icon {
@@ -61,19 +140,71 @@
 
 .dark .ant-card {
   background-color: #1f1f1f;
+  border-color: #303030;
 }
 
-/* 修改主题切换按钮的样式 */
-.dark .ant-btn {
-  background-color: #1f1f1f;
-  border-color: #434343;
+.dark .ant-input,
+.dark .ant-input-password {
+  background-color: #141414 !important;
+  border-color: #434343 !important;
   color: #d9d9d9;
 }
 
-.dark .ant-btn:hover {
-  background-color: #2d2d2d !important;
+.dark .ant-input:hover,
+.dark .ant-input-password:hover {
+  border-color: #165996 !important;
+}
+
+.dark .ant-input:focus,
+.dark .ant-input-password:focus,
+.dark .ant-input-focused,
+.dark .ant-input-password-focused {
+  border-color: #177ddc !important;
+  box-shadow: 0 0 0 2px rgba(23, 125, 220, 0.1) !important;
+}
+
+.dark .ant-input-affix-wrapper {
+  background-color: #141414 !important;
   border-color: #434343 !important;
-  color: #fff !important;
+  color: #d9d9d9;
+}
+
+.dark .ant-input-affix-wrapper:hover {
+  border-color: #165996 !important;
+}
+
+.dark .ant-input-affix-wrapper:focus,
+.dark .ant-input-affix-wrapper-focused {
+  border-color: #177ddc !important;
+  box-shadow: 0 0 0 2px rgba(23, 125, 220, 0.1) !important;
+}
+
+.dark .ant-input-affix-wrapper > input.ant-input {
+  background-color: transparent !important;
+}
+
+.dark .ant-input-password-icon {
+  color: #424242;
+}
+
+.dark .ant-input-password-icon:hover {
+  color: #177ddc;
+}
+
+.dark .ant-btn-primary {
+  background-color: #177ddc;
+}
+
+.dark .ant-btn-primary:hover {
+  background-color: #165996;
+}
+
+.dark a {
+  color: #177ddc;
+}
+
+.dark a:hover {
+  color: #165996;
 }
 
 .dark .ant-descriptions-item-label {
@@ -96,4 +227,253 @@
 /* 主题切换按钮的阴影效果 */
 .dark .shadow-lg {
   box-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1);
+}
+
+/* 暗色模式下的描述列表样式 */
+.dark .ant-descriptions-bordered .ant-descriptions-item-label {
+  background-color: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark .ant-descriptions-bordered .ant-descriptions-item-content {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #e5e7eb;
+}
+
+.dark .ant-descriptions-bordered {
+  border-color: #4b5563;
+}
+
+/* 修改暗色模式下的头部样式 */
+.dark .ant-layout-header {
+  background-color: #141414;
+  border-bottom: 1px solid #303030;
+}
+
+.dark .ant-dropdown-menu {
+  background-color: #1f1f1f;
+  border: 1px solid #303030;
+}
+
+.dark .ant-dropdown-menu-item {
+  color: #d9d9d9;
+}
+
+.dark .ant-dropdown-menu-item:hover {
+  background-color: #303030;
+}
+
+.dark .ant-dropdown-menu-item-divider {
+  background-color: #303030;
+}
+
+/* 轮播图样式 */
+.ant-carousel {
+  height: 100%;
+}
+
+.ant-carousel .slick-slider,
+.ant-carousel .slick-list,
+.ant-carousel .slick-track {
+  height: 100%;
+}
+
+/* 图片过渡动画 */
+.ant-carousel .slick-slide > div {
+  height: 100%;
+}
+
+.ant-carousel .slick-slide {
+  position: relative;
+}
+
+/* 暗色模式下的轮播图样式 */
+.dark .ant-carousel .slick-dots li button {
+  background: #177ddc;
+}
+
+.dark .ant-carousel .slick-dots li.slick-active button {
+  background: #177ddc;
+}
+
+/* 添加到暗色模式样式部分 */
+.dark .ant-modal .ant-modal-content {
+  background-color: #1f1f1f;
+  border: 1px solid #303030;
+}
+
+.dark .ant-modal .ant-modal-header {
+  background-color: #1f1f1f;
+  border-bottom: 1px solid #303030;
+}
+
+.dark .ant-modal .ant-modal-title {
+  color: #d9d9d9;
+}
+
+.dark .ant-modal .ant-modal-close {
+  color: #d9d9d9;
+}
+
+.dark .ant-modal .ant-modal-close:hover {
+  color: #177ddc;
+}
+
+/* 暗色模式下的表格样式 */
+.dark .ant-table {
+  background-color: #1f1f1f;
+  color: #d9d9d9;
+}
+
+.dark .ant-table-thead > tr > th {
+  background-color: #141414 !important;
+  color: #d9d9d9 !important;
+  border-bottom: 1px solid #303030 !important;
+}
+
+.dark .ant-table-tbody > tr > td {
+  border-bottom: 1px solid #303030;
+  color: #d9d9d9;
+}
+
+.dark .ant-table-tbody > tr:hover > td {
+  background-color: #262626 !important;
+}
+
+/* 暗色模式下的链接按钮样式 */
+.dark .ant-btn-link {
+  color: #d9d9d9;
+}
+
+.dark .ant-btn-link:hover {
+  color: #ffffff !important;
+}
+
+.dark .ant-btn-link.ant-btn-dangerous {
+  color: #ff4d4f;
+}
+
+.dark .ant-btn-link.ant-btn-dangerous:hover {
+  color: #ff7875 !important;
+}
+
+/* 暗色模式下的标签样式 */
+.dark .ant-tag {
+  border-color: #434343;
+  background: #1f1f1f;
+}
+
+/* 暗色模式下的空状态样式 */
+.dark .ant-empty-description {
+  color: #d9d9d9;
+}
+
+/* 暗色模式下的分页样式 */
+.dark .ant-pagination-item {
+  background-color: #1f1f1f;
+  border-color: #434343;
+}
+
+.dark .ant-pagination-item a {
+  color: #d9d9d9;
+}
+
+.dark .ant-pagination-item-active {
+  border-color: #177ddc;
+}
+
+.dark .ant-pagination-prev button,
+.dark .ant-pagination-next button {
+  background-color: #1f1f1f;
+  border-color: #434343;
+  color: #d9d9d9;
+}
+
+/* 暗色模式下的按钮样式 */
+/* 主要按钮 */
+.dark .ant-btn-primary {
+  background: #2c2c2c !important;
+  border-color: #2c2c2c !important;
+  color: white !important;
+}
+
+.dark .ant-btn-primary:hover,
+.dark .ant-btn-primary:focus {
+  background: #404040 !important;
+  border-color: #404040 !important;
+}
+
+/* 默认按钮 */
+.dark .ant-btn-default {
+  background: transparent !important;
+  border-color: #434343 !important;
+  color: white !important;
+}
+
+.dark .ant-btn-default:hover,
+.dark .ant-btn-default:focus {
+  border-color: #636363 !important;
+  color: white !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 链接按钮 */
+.dark .ant-btn-link {
+  color: white !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.dark .ant-btn-link:hover,
+.dark .ant-btn-link:focus {
+  color: white !important;
+  opacity: 0.85;
+}
+
+/* 文本按钮 */
+.dark .ant-btn-text {
+  color: white !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.dark .ant-btn-text:hover,
+.dark .ant-btn-text:focus {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 危险按钮 */
+.dark .ant-btn-dangerous {
+  color: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+}
+
+.dark .ant-btn-dangerous:hover,
+.dark .ant-btn-dangerous:focus {
+  color: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+.dark .ant-btn-dangerous.ant-btn-primary {
+  background: #ff4d4f !important;
+  border-color: #ff4d4f !important;
+  color: white !important;
+}
+
+.dark .ant-btn-dangerous.ant-btn-primary:hover,
+.dark .ant-btn-dangerous.ant-btn-primary:focus {
+  background: #ff7875 !important;
+  border-color: #ff7875 !important;
+}
+
+/* 禁用状态 */
+.dark .ant-btn[disabled],
+.dark .ant-btn[disabled]:hover,
+.dark .ant-btn[disabled]:focus {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: #434343 !important;
+  color: rgba(255, 255, 255, 0.3) !important;
 } 
