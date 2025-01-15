@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_URL = import.meta.env.VITE_API_URL || '/api/v1';
+
 const request = axios.create({
-  baseURL: '/api/v1',
+  baseURL: API_URL,
   timeout: 10000,
 });
 
@@ -29,7 +31,6 @@ request.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // 清除 token 并跳转到登录页
       localStorage.removeItem('token');
       window.location.href = '/login';
     }

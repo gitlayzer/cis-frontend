@@ -28,4 +28,7 @@ pnpm install
 
 # 打包项目
 pnpm run build
+
+# 将构建出来的文件放到 nginx 的 /usr/share/nginx/html 下即可
+cp -r dist/* /usr/share/nginx/html/
 ```
